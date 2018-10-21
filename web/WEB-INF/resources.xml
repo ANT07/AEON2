@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+  <Resource id="mysql" type="javax.sql.DataSource">#Tue Oct 09 17:01:12 CST 2018
+jdbcDriver=com.mysql.jdbc.Driver
+password=1234
+userName=root
+jdbcUrl=jdbc\:mysql\://localhost\:3306/aeon?zeroDateTimeBehavior\=convertToNull
+</Resource>
+</resources>

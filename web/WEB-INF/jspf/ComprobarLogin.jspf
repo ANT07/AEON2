@@ -1,0 +1,44 @@
+<%-- any content can be specified here e.g.: --%>
+
+<%@page import="com.oc.model.SubMenu"%>
+<%@page import="com.oc.dao.daoclases.SubmenuDAO"%>
+<%@page import="com.oc.model.Usuario"%>
+<%@page import="java.util.List"%>
+
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.util.Set"%>
+<%@page import="helperclasses.helperclass"%>
+
+<%@ page pageEncoding="UTF-8" %>
+<%
+    Usuario userLogin = (Usuario) session.getAttribute("user");
+    if (userLogin == null) {
+        RequestDispatcher salida = request.getRequestDispatcher("/index.jsp");
+        salida.forward(request,
+                response);
+    }
+    
+    boolean permiso = false;
+    SubmenuDAO submenuDAOs = new SubmenuDAO();
+    String urlThisPage = request.getRequestURL().toString();
+
+    List<SubMenu> submenusList = submenuDAOs.obtenerSubmenuByRoll(
+            userLogin.getRoll().getRollId());
+
+    for (SubMenu submenu : submenusList) {
+        String submenuUrl = submenu.getUrl();
+        int prueba = urlThisPage.indexOf(submenuUrl);
+        if (prueba != -1) {
+            permiso = true;
+        }
+    }
+
+    if (!permiso) {
+        request.setAttribute("NoPermiso",
+                "No tienes acceso a esta pagina");
+        RequestDispatcher salida = request.getRequestDispatcher("/OrdersView.jsp");
+        salida.forward(request,
+                response);
+    }
+
+%>

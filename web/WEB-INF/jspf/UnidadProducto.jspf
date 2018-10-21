@@ -1,0 +1,25 @@
+<%-- any content can be specified here e.g.: --%>
+<%@ page pageEncoding="UTF-8" %>
+<div class="well well-sm col-xs-6 col-sm-4 col-md-3 col-lg-2" >
+    <div class="panel panel-primary" style="margin: 0px !important; padding: 3px !important; height: 100%">
+        <div class="panel-body" style="padding:  3px !important; ">
+            <div style="margin-bottom: 10px;">
+                <span class="label label-success">${producto.nombreproducto}</span>
+                <span class="label label-info">$ ${producto.precio}</span>
+            </div>
+            <img src="${pageContext.request.contextPath}/images/images.jpg" class="img-responsive img-rounded" >
+            <form id="carrito${producto.idproducto}" action="anadircarrito.do" method="post">
+                <input type="hidden" name="accion" value="agregar">
+                <input type="hidden" name="productoId" value="${producto.idproducto}">
+            </form>
+            <div  class="form-group row" style="margin: 0px !important;">
+                <div class='col-xs-8' >
+                    <input type='number' min='1' max='50' value='1' form="carrito${producto.idproducto}" name='cantidadProducto' class='form-control input-sm'><br>
+                </div>
+                <div class="col-xs-4">
+                    <button  form="carrito${producto.idproducto}" class="btn btn-sm btn-success" type="submit" ><span class="glyphicon glyphicon-shopping-cart"></span></button>
+                </div>
+            </div>
+        </div> 
+    </div>
+</div>

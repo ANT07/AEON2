@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
+
+    <servlet>
+        <servlet-name>MenuServlet</servlet-name>
+        <servlet-class>aeon.controlador.servlet.MenuServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AnadirCarrito</servlet-name>
+        <servlet-class>aeon.controlador.servlet.AnadirCarrito</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>Faces Servlet</servlet-name>
+        <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>MenuServlet</servlet-name>
+        <url-pattern>/menu.do</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>SubmenuServlet</servlet-name>
+        <servlet-class>aeon.controlador.servlet.SubmenuServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>SubmenuServlet</servlet-name>
+        <url-pattern>/submenu.do</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>RollServlet</servlet-name>
+        <servlet-class>aeon.controlador.servlet.RollServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>RollServlet</servlet-name>
+        <url-pattern>/roll.do</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>OpcionesServlet</servlet-name>
+        <servlet-class>aeon.controlador.servlet.OpcionesServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>OpcionesServlet</servlet-name>
+        <url-pattern>/opciones.do</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>UsuarioServlet</servlet-name>
+        <servlet-class>aeon.controlador.servlet.UsuarioServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>UsuarioServlet</servlet-name>
+        <url-pattern>/usuario.do</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>ServletInicioSesion</servlet-name>
+        <servlet-class>aeon.controlador.servlet.ServletInicioSesion</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ServletInicioSesion</servlet-name>
+        <url-pattern>/sesion.do</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AnadirCarrito</servlet-name>
+        <url-pattern>/anadircarrito.do</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>ProductServlet</servlet-name>
+        <servlet-class>aeon.controlador.servlet.ProductServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ProductServlet</servlet-name>
+        <url-pattern>/producto.do</url-pattern>
+    </servlet-mapping>
+
+    <session-config>
+        <session-timeout>
+            30
+        </session-timeout>
+    </session-config>
+    <welcome-file-list>
+        <!--<welcome-file>faces/index.xhtml</welcome-file>-->
+        <welcome-file>index.jsp</welcome-file>
+    </welcome-file-list>
+</web-app>
