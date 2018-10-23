@@ -38,7 +38,7 @@
                                 <form action="producto.do" method="post" id="form" enctype='multipart/form-data'>
                                     <input name="tipo" id="tipo" value="guardar" type="hidden">
                                     <div class="form-group">
-                                        <img id="imagen" class="img-responsive img-rounded center-block" src="${pageContext.request.contextPath}/images/images.jpg" style="width: 200px !important; height: 200px !important;">
+                                        <img id="imagen" class="img-responsive img-rounded center-block" src="C:\Users\anthony\Documents\NetBeansProjects\AEON\web\images\jsf7.png" style="width: 200px !important; height: 200px !important;">
                                         <input name="image" type="file" id="image" class="form-control" onchange="cambiarImagen(this)">
                                     </div>
                                     <div class="form-group">

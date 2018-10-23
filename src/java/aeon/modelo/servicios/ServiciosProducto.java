@@ -23,8 +23,8 @@ public class ServiciosProducto {
             throws Exception {
         Conexion conexion = null;
         try {
-            conexion = new Conexion();
-            String sql = "INSERT INTO `producto`( `IDCATEGORIA`, `NOMBREPRODUCTO`, `EXISTENCIA`, `DESCRIPCION`, `ESTADOPRODUCTO`,'PRECIO','IMAGEN') "
+            conexion = new Conexion(); 
+            String sql = "INSERT INTO `producto`( `IDCATEGORIA`, `NOMBREPRODUCTO`, `EXISTENCIA`, `DESCRIPCION`, `ESTADOPRODUCTO`,PRECIO,IMAGEN) "
                     + "VALUES (?,?,?,?,?,?,?)";
             PreparedStatement consulta = conexion.getConexion().prepareStatement(
                     sql);
@@ -38,11 +38,10 @@ public class ServiciosProducto {
                     producto.getDescripcion());
             consulta.setInt(5,
                     producto.getEstadoproducto());
-            consulta.executeUpdate();
             consulta.setDouble(6,
                     producto.getPrecio());
-            consulta.setDouble(7,
-                    producto.getPrecio());
+            consulta.setString(7,
+                    producto.getPathImage());
             consulta.executeUpdate();
         } finally {
             if (conexion != null && conexion.getConexion() != null) {
