@@ -26,7 +26,7 @@ public class helperclass {
         if(paths != null){
             for (String string : paths) {
                 Set<String> otherPaths = application.getResourcePaths(string);
-                if(otherPaths.size() == 0){
+                if(otherPaths == null || otherPaths.size() == 0){
                     int puntoJsp = string.indexOf(".jsp");
                     int puntoHtml = string.indexOf(".html");
                     if(puntoHtml != -1 || puntoJsp != -1){

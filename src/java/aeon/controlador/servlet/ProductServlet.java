@@ -99,7 +99,7 @@ public class ProductServlet extends HttpServlet {
 //            int existencia = Integer.parseInt(request.getParameter("existencia"));
 //
             RequestDispatcher requestDispatcher = request.getRequestDispatcher(
-                    "/ProductoView.jsp");
+                    "/ProductView.jsp");
 //
 //            Producto producto = new Producto();
 //            ServiciosProducto serviciosProducto = new ServiciosProducto();
@@ -138,7 +138,7 @@ public class ProductServlet extends HttpServlet {
                     "C:/Users/anthony/Documents/NetBeansProjects/AEON/web/images",archivoImagen.getName());
             archivoImagen.write(fichero);
 
-            int indicePath = fichero.getAbsolutePath().indexOf("/images");
+            int indicePath = fichero.getAbsolutePath().indexOf("\\images");
             String pathServer = fichero.getAbsolutePath().substring(indicePath,fichero.getAbsolutePath().length());
             producto.setPathImage(pathServer);
             producto.setNombreproducto(parametros.get("produtcname"));
@@ -146,10 +146,9 @@ public class ProductServlet extends HttpServlet {
             producto.setPrecio(Double.parseDouble(parametros.get("precioProducto")));
             producto.setIdcategoria(Integer.parseInt(parametros.get("categoria")));
             producto.setDescripcion(parametros.get("descripcion"));
-            producto.setEstadoproducto(parametros.get("productostate") != null ? 1 : 0);
+            producto.setEstadoproducto(parametros.get("produtcstate") != null ? 1 : 0);
 
             //////////////////////
-
             switch (parametros.get("tipo")) {
                 case "guardar":
                     serviciosProducto.insertarProducto(producto);

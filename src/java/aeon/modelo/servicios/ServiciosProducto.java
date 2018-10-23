@@ -122,6 +122,7 @@ public class ServiciosProducto {
                 producto.setNombreproducto(resultado.getString("NOMBREPRODUCTO"));
                 producto.setIdcategoria(resultado.getInt("IDCATEGORIA"));
                 producto.setPrecio(resultado.getDouble("PRECIO"));
+                producto.setPathImage(resultado.getString("IMAGEN"));
                 productos.add(producto);
             }
         } finally {
