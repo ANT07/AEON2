@@ -97,25 +97,6 @@ function cambiarTipo(){
 
 
 
-function abrirDialogoProduct(productid,productname,productstate){
-        var tipo = document.getElementById("tipo");
-        tipo.value = "editar";
-        
-        var produtcIdText = document.getElementById("produtcid");
-        var produtcNameText = document.getElementById("produtcname");
-        var produtcStateCheck = document.getElementById("produtcstate");
-        
-        produtcIdText.value = productid;
-        produtcIdText.readOnly = true;
-        produtcNameText.value = productname;
-        
-        if(productstate == 1){
-            produtcStateCheck.setAttribute("checked","true");
-        }
-        else{
-            produtcStateCheck.removeAttribute("checked");
-        }
-}
 
 
 
@@ -127,9 +108,9 @@ function abrirDialogoProduct(productid,productname,productstate){
 
 
 
-    function resetForm(){
-        var form = document.getElementById("form");
-        form.reset();
+
+    function resetForm(element){
+        element.form.reset();
     }
     
     /*$(document).ready(function () {

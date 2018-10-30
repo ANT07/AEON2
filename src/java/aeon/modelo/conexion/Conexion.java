@@ -21,7 +21,7 @@ public class Conexion {
     private String port = "3306";
     private String basedatos = "aeon";
     private String url = "jdbc:mysql://"+host+":"+port+"/"+basedatos;
-    private String password = "1234"
+    private String password = "Bravo7196"
             + "";
     private String user = "root";
     
@@ -30,6 +30,7 @@ public class Conexion {
     }
     
     private void abrirConexion() throws Exception{
+        Class.forName("com.mysql.jdbc.Driver");
             conexion = DriverManager.getConnection(url,user,password);
     }
     public void cerrarConexion(){

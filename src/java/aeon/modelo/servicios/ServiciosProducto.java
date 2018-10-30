@@ -79,6 +79,7 @@ public class ServiciosProducto {
                     + "`EXISTENCIA`= ?,"
                     + "`DESCRIPCION`= ?,"
                      + "`PRECIO`= ?,"
+                    + "`IMAGEN`=?,"
                     + "`ESTADOPRODUCTO`= ? WHERE `IDPRODUCTO` = ?";
             PreparedStatement consulta = conexion.getConexion().prepareStatement(
                     sql);
@@ -94,7 +95,9 @@ public class ServiciosProducto {
                     producto.getEstadoproducto());
              consulta.setDouble(6,
                     producto.getPrecio());
-            consulta.setInt(7,
+             consulta.setString(7,
+                    producto.getPathImage());
+            consulta.setInt(8,
                     producto.getIdproducto());
             consulta.executeUpdate();
         } finally {
@@ -154,6 +157,7 @@ public class ServiciosProducto {
                 producto.setNombreproducto(resultado.getString("NOMBREPRODUCTO"));
                 producto.setIdcategoria(resultado.getInt("IDCATEGORIA"));
                 producto.setPrecio(resultado.getDouble("PRECIO"));
+                producto.setPathImage(resultado.getString("IMAGEN"));
 
             }
         } finally {

@@ -37,8 +37,12 @@
                             <div class="modal-body">
                                 <form action="producto.do" method="post" id="form" enctype='multipart/form-data'>
                                     <input name="tipo" id="tipo" value="guardar" type="hidden">
+                                    <input name="idProducto" id="idProducto" value="0" type="hidden">
                                     <div class="form-group">
-                                        <img id="imagen" class="img-responsive img-rounded center-block" src="C:\Users\anthony\Documents\NetBeansProjects\AEON\web\images\jsf7.png" style="width: 200px !important; height: 200px !important;">
+                                        <img id="imagen" class="img-responsive img-rounded center-block" src="${pageContext.request.contextPath}\images\images.jpg" style="width: 200px !important; height: 200px !important;">
+
+                                    </div>
+                                    <div class="form-group">
                                         <input name="image" type="file" id="image" class="form-control" onchange="cambiarImagen(this)">
                                     </div>
                                     <div class="form-group">
@@ -71,10 +75,11 @@
                                     </div>
                                 </form>
                             </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                            <button type="submit" class="btn btn-warning" form="form" >Guardar</button>
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                                <button type="submit" class="btn btn-warning" form="form" >Guardar</button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -108,7 +113,7 @@
                                     <c:if test="${produtc.estadoproducto == 0}">Inactivo</c:if>
                                     </td>
                                     <td>
-                                        <button type="button" class="btn btn-warning btn-sm btn-block" data-toggle="modal" data-target="#myModal" onclick="abrirDialogoProduct()">
+                                        <button type="button" class="btn btn-warning btn-sm btn-block" data-toggle="modal" data-target="#myModal" onclick="abrirDialogoProducto('${produtc.idproducto}','${produtc.nombreproducto}','${produtc.idcategoria}','${produtc.precio}','${produtc.existencia}','${produtc.estadoproducto}','${pageContext.request.contextPath}${produtc.pathImage}')">
                                             <span class="glyphicon glyphicon-edit"></span> Editar
                                         </button>
                                     </td>
@@ -135,5 +140,34 @@
     function cargar(e) {
         var img = document.getElementById("imagen");
         img.src = e.target.result;
+    }
+    
+    function abrirDialogoProducto(idproducto,nombreproducto,idcategoria,precio,existencia,estadoproducto,pathImage) {
+        var tipo = document.getElementById("tipo");
+        tipo.value = "editar";
+
+        var idProductoHidden = document.getElementById("idProducto");
+        var nombreproductotxt = document.getElementById("produtcname");
+        var idcategoriatxt = document.getElementById("categoria");
+        var preciotxt = document.getElementById("precioProducto");
+        var existenciatxt = document.getElementById("existencia");
+        var estadoproductotxt = document.getElementById("produtcstate");
+        var pathImageimg = document.getElementById("imagen");
+        var fileImage = document.getElementById("image");
+        
+        idProductoHidden.value = idproducto;
+        nombreproductotxt.value = nombreproducto;
+        idcategoriatxt.value = idcategoria;
+        preciotxt.value = precio;
+        existenciatxt.value = existencia;
+        pathImageimg.src = pathImage;
+        
+        if(estadoproducto == 1){
+            estadoproductotxt.checked = true;
+        }else{
+            estadoproductotxt.checked = false;
+        }
+        
+
     }
 </script>

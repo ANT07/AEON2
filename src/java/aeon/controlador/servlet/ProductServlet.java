@@ -89,35 +89,16 @@ public class ProductServlet extends HttpServlet {
             throws ServletException,
             IOException {
         try {
-            String tipo = request.getParameter("tipo");
-//            String productoname = request.getParameter("produtcname");
-//            String descripcion = request.getParameter("descripcion");
-//            String precio = request.getParameter("precioProducto");
-//            double precioProducto = Double.parseDouble(request.getParameter("precioProducto"));
-//            int productostate = request.getParameter("productostate") != null ? 1 : 0;
-//            int categoria = Integer.parseInt(request.getParameter("categoria"));
-//            int existencia = Integer.parseInt(request.getParameter("existencia"));
-//
             RequestDispatcher requestDispatcher = request.getRequestDispatcher(
                     "/ProductView.jsp");
-//
-//            Producto producto = new Producto();
-//            ServiciosProducto serviciosProducto = new ServiciosProducto();
-//
-//            producto.setNombreproducto(productoname);
-//            producto.setEstadoproducto(productostate);
-//            producto.setExistencia(existencia);
-//            producto.setIdcategoria(categoria);
-//            producto.setDescripcion(descripcion);
 
-            /////////////////////////
             FileItemFactory factory = new DiskFileItemFactory();
             ServletFileUpload upload = new ServletFileUpload(factory);
-            
+
             List items = upload.parseRequest(request);
             HashMap<String, String> parametros = new HashMap<>();
             FileItem archivoImagen = null;
-            
+
             for (Object item : items) {
                 FileItem uploaded = (FileItem) item;
 
@@ -133,41 +114,65 @@ public class ProductServlet extends HttpServlet {
             }
 
             ServiciosProducto serviciosProducto = new ServiciosProducto();
-            Producto producto = new Producto();
-            File fichero = new File(
-                    "C:/Users/anthony/Documents/NetBeansProjects/AEON/web/images",archivoImagen.getName());
-            archivoImagen.write(fichero);
-
-            int indicePath = fichero.getAbsolutePath().indexOf("\\images");
-            String pathServer = fichero.getAbsolutePath().substring(indicePath,fichero.getAbsolutePath().length());
-            producto.setPathImage(pathServer);
-            producto.setNombreproducto(parametros.get("produtcname"));
-            producto.setExistencia(Double.parseDouble(parametros.get("existencia")));
-            producto.setPrecio(Double.parseDouble(parametros.get("precioProducto")));
-            producto.setIdcategoria(Integer.parseInt(parametros.get("categoria")));
-            producto.setDescripcion(parametros.get("descripcion"));
-            producto.setEstadoproducto(parametros.get("produtcstate") != null ? 1 : 0);
 
             //////////////////////
             switch (parametros.get("tipo")) {
-                case "guardar":
+                case "guardar":{
+                    Producto producto = new Producto();
+                    File fichero = new File(
+                            "C:\\Users\\ANTHONY MARTINEZ\\Documents\\NetBeansProjects\\AEON2\\web\\images", archivoImagen.getName());
+                    archivoImagen.write(fichero);
+
+                    int indicePath = fichero.getAbsolutePath().indexOf("\\images");
+                    String pathServer = fichero.getAbsolutePath().substring(indicePath, fichero.getAbsolutePath().length());
+                    pathServer = pathServer.replace('\\', '/');
+                    producto.setPathImage(pathServer);
+                    producto.setNombreproducto(parametros.get("produtcname"));
+                    producto.setExistencia(Double.parseDouble(parametros.get("existencia")));
+                    producto.setPrecio(Double.parseDouble(parametros.get("precioProducto")));
+                    producto.setIdcategoria(Integer.parseInt(parametros.get("categoria")));
+                    producto.setDescripcion(parametros.get("descripcion"));
+                    producto.setEstadoproducto(parametros.get("produtcstate") != null ? 1 : 0);
                     serviciosProducto.insertarProducto(producto);
                     break;
-                case "editar":
-                    
-                    serviciosProducto.ActualizarProducto(producto);
+                }
+                case "editar":{
+                    int productId = Integer.parseInt(parametros.get("idProducto"));
+                    Producto productoNuevo = serviciosProducto.ObtenerProductoById(productId);
+                    String old = request.getServletContext().getRealPath(productoNuevo.getPathImage());
+                    File imagenVieja = new File(old);
+                    if(imagenVieja.exists()){
+                        imagenVieja.delete();
+                    }
+                    File fichero = new File(
+                            "C:\\Users\\ANTHONY MARTINEZ\\Documents\\NetBeansProjects\\AEON2\\web\\images", archivoImagen.getName());
+                    archivoImagen.write(fichero);
+
+                    int indicePath = fichero.getAbsolutePath().indexOf("\\images");
+                    String pathServer = fichero.getAbsolutePath().substring(indicePath, fichero.getAbsolutePath().length());
+                    pathServer = pathServer.replace('\\', '/');
+                    productoNuevo.setPathImage(pathServer);
+                    productoNuevo.setNombreproducto(parametros.get("produtcname"));
+                    productoNuevo.setExistencia(Double.parseDouble(parametros.get("existencia")));
+                    productoNuevo.setPrecio(Double.parseDouble(parametros.get("precioProducto")));
+                    productoNuevo.setIdcategoria(Integer.parseInt(parametros.get("categoria")));
+                    productoNuevo.setDescripcion(parametros.get("descripcion"));
+                    productoNuevo.setEstadoproducto(parametros.get("produtcstate") != null ? 1 : 0);
+
+                    serviciosProducto.ActualizarProducto(productoNuevo);
                     break;
+                }
                 default:
                     throw new Exception(
                             "Error de operacion" + this.getClass());
             }
-            
+
             requestDispatcher.forward(request,
                     response);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-        
+
     }
 
     /**
