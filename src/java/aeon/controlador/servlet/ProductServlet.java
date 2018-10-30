@@ -117,47 +117,70 @@ public class ProductServlet extends HttpServlet {
 
             //////////////////////
             switch (parametros.get("tipo")) {
-                case "guardar":{
+                case "guardar": {
                     Producto producto = new Producto();
                     File fichero = new File(
-                            "C:\\Users\\ANTHONY MARTINEZ\\Documents\\NetBeansProjects\\AEON2\\web\\images", archivoImagen.getName());
+                            request.getServletContext().getRealPath("/images"),
+                            archivoImagen.getName());
                     archivoImagen.write(fichero);
 
-                    int indicePath = fichero.getAbsolutePath().indexOf("\\images");
-                    String pathServer = fichero.getAbsolutePath().substring(indicePath, fichero.getAbsolutePath().length());
-                    pathServer = pathServer.replace('\\', '/');
+                    int indicePath = fichero.getAbsolutePath().indexOf(
+                            "\\images");
+                    String pathServer = fichero.getAbsolutePath().substring(
+                            indicePath,
+                            fichero.getAbsolutePath().length());
+                    pathServer = pathServer.replace('\\',
+                            '/');
                     producto.setPathImage(pathServer);
                     producto.setNombreproducto(parametros.get("produtcname"));
-                    producto.setExistencia(Double.parseDouble(parametros.get("existencia")));
-                    producto.setPrecio(Double.parseDouble(parametros.get("precioProducto")));
-                    producto.setIdcategoria(Integer.parseInt(parametros.get("categoria")));
+                    producto.setExistencia(Double.parseDouble(parametros.get(
+                            "existencia")));
+                    producto.setPrecio(Double.parseDouble(parametros.get(
+                            "precioProducto")));
+                    producto.setIdcategoria(Integer.parseInt(parametros.get(
+                            "categoria")));
                     producto.setDescripcion(parametros.get("descripcion"));
-                    producto.setEstadoproducto(parametros.get("produtcstate") != null ? 1 : 0);
+                    producto.setEstadoproducto(
+                            parametros.get("produtcstate") != null ? 1 : 0);
                     serviciosProducto.insertarProducto(producto);
                     break;
                 }
-                case "editar":{
-                    int productId = Integer.parseInt(parametros.get("idProducto"));
-                    Producto productoNuevo = serviciosProducto.ObtenerProductoById(productId);
-                    String old = request.getServletContext().getRealPath(productoNuevo.getPathImage());
+                case "editar": {
+                    int productId = Integer.parseInt(
+                            parametros.get("idProducto"));
+                    Producto productoNuevo = serviciosProducto.ObtenerProductoById(
+                            productId);
+                    String old = request.getServletContext().getRealPath(
+                            productoNuevo.getPathImage());
                     File imagenVieja = new File(old);
-                    if(imagenVieja.exists()){
+                   
+                    if (imagenVieja != null && imagenVieja.exists()) {
                         imagenVieja.delete();
                     }
                     File fichero = new File(
-                            "C:\\Users\\ANTHONY MARTINEZ\\Documents\\NetBeansProjects\\AEON2\\web\\images", archivoImagen.getName());
+                            request.getServletContext().getRealPath("/images"),
+                            archivoImagen.getName());
                     archivoImagen.write(fichero);
 
-                    int indicePath = fichero.getAbsolutePath().indexOf("\\images");
-                    String pathServer = fichero.getAbsolutePath().substring(indicePath, fichero.getAbsolutePath().length());
-                    pathServer = pathServer.replace('\\', '/');
+                    int indicePath = fichero.getAbsolutePath().indexOf(
+                            "\\images");
+                    String pathServer = fichero.getAbsolutePath().substring(
+                            indicePath,
+                            fichero.getAbsolutePath().length());
+                    pathServer = pathServer.replace('\\',
+                            '/');
                     productoNuevo.setPathImage(pathServer);
-                    productoNuevo.setNombreproducto(parametros.get("produtcname"));
-                    productoNuevo.setExistencia(Double.parseDouble(parametros.get("existencia")));
-                    productoNuevo.setPrecio(Double.parseDouble(parametros.get("precioProducto")));
-                    productoNuevo.setIdcategoria(Integer.parseInt(parametros.get("categoria")));
+                    productoNuevo.setNombreproducto(
+                            parametros.get("produtcname"));
+                    productoNuevo.setExistencia(Double.parseDouble(
+                            parametros.get("existencia")));
+                    productoNuevo.setPrecio(Double.parseDouble(parametros.get(
+                            "precioProducto")));
+                    productoNuevo.setIdcategoria(Integer.parseInt(
+                            parametros.get("categoria")));
                     productoNuevo.setDescripcion(parametros.get("descripcion"));
-                    productoNuevo.setEstadoproducto(parametros.get("produtcstate") != null ? 1 : 0);
+                    productoNuevo.setEstadoproducto(parametros.get(
+                            "produtcstate") != null ? 1 : 0);
 
                     serviciosProducto.ActualizarProducto(productoNuevo);
                     break;

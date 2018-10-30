@@ -74,12 +74,12 @@ public class ServiciosProducto {
         try {
             conexion = new Conexion();
             String sql = "UPDATE `producto` SET "
-                    + "IDCATEGORIA`= ?,"
-                    + "`NOMBREPRODUCTO`= ?,"
-                    + "`EXISTENCIA`= ?,"
-                    + "`DESCRIPCION`= ?,"
-                     + "`PRECIO`= ?,"
-                    + "`IMAGEN`=?,"
+                    + "`IDCATEGORIA`= ? ,"
+                    + "`NOMBREPRODUCTO`= ? ,"
+                    + "`EXISTENCIA`= ? ,"
+                    + "`DESCRIPCION`= ? ,"
+                     + "`PRECIO`= ? ,"
+                    + "`IMAGEN`= ? ,"
                     + "`ESTADOPRODUCTO`= ? WHERE `IDPRODUCTO` = ?";
             PreparedStatement consulta = conexion.getConexion().prepareStatement(
                     sql);
@@ -91,12 +91,12 @@ public class ServiciosProducto {
                     producto.getExistencia());
             consulta.setString(4,
                     producto.getDescripcion());
-            consulta.setInt(5,
-                    producto.getEstadoproducto());
-             consulta.setDouble(6,
+            consulta.setDouble(5,
                     producto.getPrecio());
-             consulta.setString(7,
+             consulta.setString(6,
                     producto.getPathImage());
+             consulta.setInt(7,
+                    producto.getEstadoproducto());
             consulta.setInt(8,
                     producto.getIdproducto());
             consulta.executeUpdate();
