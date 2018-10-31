@@ -136,10 +136,7 @@ function cambiarTipo(){
         });
     }
     
-    function validar(e){
-        //e.preventDefault();
-        dialogs("Error de datos","Complete todos los campos");
-    }
+
     
     window.onload = comenzar;
     

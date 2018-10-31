@@ -35,7 +35,7 @@
                                 <h4 class="modal-title" id="myModalLabel">Productos</h4>
                             </div>
                             <div class="modal-body">
-                                <form action="producto.do" method="post" id="form" enctype='multipart/form-data'>
+                                <form action="producto.do" method="post" id="form" enctype='multipart/form-data' onsubmit="validar(event)">
                                     <input name="tipo" id="tipo" value="guardar" type="hidden">
                                     <input name="idProducto" id="idProducto" value="0" type="hidden">
                                     <div class="form-group">
@@ -43,7 +43,7 @@
 
                                     </div>
                                     <div class="form-group">
-                                        <input name="image" type="file" id="image" class="form-control" onchange="cambiarImagen(this)">
+                                        <input name="image" type="file" id="image" class="form-control" onchange="cambiarImagen(this)" required>
                                     </div>
                                     <div class="form-group">
                                         <label>Nombre Producto: </label>
@@ -64,9 +64,7 @@
 
                                     <div class="form-group">
                                         <label>Descripcion: </label>
-                                        <textarea class="form-control" rows="6" name="descripcion" id="descripcion">
-                                    
-                                        </textarea>
+                                        <textarea class="form-control" rows="6" name="descripcion" id="descripcion"></textarea>
                                     </div>
                                     <div class="form-group">
                                         <label class="checkbox-inline">
@@ -86,7 +84,7 @@
             </div>
             <div class="col-md-8 col-md-offset-2">
                 <!-- Button trigger modal -->
-                <button type="button" class="btn btn-warning btn-sm btn-block" data-toggle="modal" data-target="#myModal" onclick="resetForm(), habilitarText()">
+                <button type="button" class="btn btn-warning btn-sm btn-block" data-toggle="modal" data-target="#myModal" onclick="resetForm('form'), habilitarText()">
                     <span class="glyphicon glyphicon-plus"></span> Nuevo Producto
                 </button><br><br>
                 <div class="table-responsive" id="tableCont">
@@ -113,11 +111,11 @@
                                     <c:if test="${produtc.estadoproducto == 0}">Inactivo</c:if>
                                     </td>
                                     <td>
-                                        <button type="button" class="btn btn-warning btn-sm btn-block" data-toggle="modal" data-target="#myModal" onclick="abrirDialogoProducto('${produtc.idproducto}','${produtc.nombreproducto}','${produtc.idcategoria}','${produtc.precio}','${produtc.existencia}','${produtc.estadoproducto}','${pageContext.request.contextPath}${produtc.pathImage}')">
-                                            <span class="glyphicon glyphicon-edit"></span> Editar
-                                        </button>
-                                    </td>
-                                </tr>
+                                        <button type="button" class="btn btn-warning btn-sm btn-block" data-toggle="modal" data-target="#myModal" onclick="abrirDialogoProducto('${produtc.idproducto}', '${produtc.nombreproducto}', '${produtc.idcategoria}', '${produtc.precio}', '${produtc.existencia}', '${produtc.estadoproducto}', '${pageContext.request.contextPath}${produtc.pathImage}')">
+                                        <span class="glyphicon glyphicon-edit"></span> Editar
+                                    </button>
+                                </td>
+                            </tr>
                         </c:forEach>
                     </table>
                 </div>
@@ -127,22 +125,37 @@
 </body>
 </html>
 <script>
+    defaultImage = "${pageContext.request.contextPath}/images/images.jpg";
+
     function cambiarImagen(elemet) {
         var file = elemet.files[0];
         var reader = new FileReader();
 
-        reader.readAsDataURL(file);
-        reader.onload = function (e) {
-            cargar(e);
-        };
+        if (validarArchivo(elemet.value)) {
+            reader.readAsDataURL(file);
+            reader.onload = function (e) {
+                cargar(e);
+            };
+        }else{
+            alert("Seleccionar un archivo de imagen correcto");
+        }
     }
+
+function validarArchivo(filePath){
+    var allowedExtensions = /(.jpg|.jpeg|.png|.gif)$/i;
+    if(allowedExtensions.exec(filePath)){
+        return true;
+    }else{
+        return false;
+    }
+}
 
     function cargar(e) {
         var img = document.getElementById("imagen");
         img.src = e.target.result;
     }
-    
-    function abrirDialogoProducto(idproducto,nombreproducto,idcategoria,precio,existencia,estadoproducto,pathImage) {
+
+    function abrirDialogoProducto(idproducto, nombreproducto, idcategoria, precio, existencia, estadoproducto, pathImage) {
         var tipo = document.getElementById("tipo");
         tipo.value = "editar";
 
@@ -154,20 +167,38 @@
         var estadoproductotxt = document.getElementById("produtcstate");
         var pathImageimg = document.getElementById("imagen");
         var fileImage = document.getElementById("image");
-        
+
         idProductoHidden.value = idproducto;
         nombreproductotxt.value = nombreproducto;
         idcategoriatxt.value = idcategoria;
         preciotxt.value = precio;
         existenciatxt.value = existencia;
         pathImageimg.src = pathImage;
-        
-        if(estadoproducto == 1){
+        fileImage.value = pathImage;
+
+        if (estadoproducto == 1) {
             estadoproductotxt.checked = true;
-        }else{
+        } else {
             estadoproductotxt.checked = false;
         }
-        
 
+
+    }
+    
+    function validar(e){
+        var fileImage = document.getElementById("image");
+        
+        if (!validarArchivo(fileImage.value)) {
+
+            alert("Seleccionar un archivo de imagen correcto");
+            e.preventDefault();
+        }
+    }
+
+    function resetForm(formId) {
+        var formulario = document.getElementById(formId);
+        formulario.reset();
+        var pathImageimg = document.getElementById("imagen");
+        pathImageimg.src = defaultImage;
     }
 </script>
